@@ -163,7 +163,11 @@
           					"description": "Value of the tag, such as 'production'"
         							}
       							}
-    						},
+    						}
+		}
+			    }
+		
+			
                         {
                             "type": "Microsoft.Consumption/budgets",
                             "apiVersion": "2019-10-01",
