@@ -96,6 +96,9 @@
             "metadata": {
                 "description": "The list of email addresses to send the budget notification to when the threshold is exceeded."
             }
+        },
+        "TagEnv": {
+            "type": "String"
         }
     },
     "resources": [
@@ -104,6 +107,10 @@
             "apiVersion": "2018-05-01",
             "name": "[parameters('rgName')]",
             "location": "[parameters('rgLocation')]",
+            "tags": {
+                "env": "[parameters('TagEnv')]",
+                "RGName": "[parameters('rgName')]"
+            },
             "properties": {}
         },
         {
@@ -124,6 +131,42 @@
                         {
                             "type": "Microsoft.Authorization/policyAssignments",
                             "apiVersion": "2019-09-01",
+                            "name": "tag_policy_rgname",
+                            "location": "westeurope",
+                            "identity": {
+                                "type": "SystemAssigned"
+                            },
+                            "properties": {
+                                "scope": "[[concat(subscription().id, '/resourcegroups/', resourceGroup().name )]",
+                                "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/cd3aa116-8754-49c9-a813-ad46512ece54",
+                                "parameters": {
+                                    "tagName": {
+                                        "value": "RGName"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Authorization/policyAssignments",
+                            "apiVersion": "2019-09-01",
+                            "name": "tag_policy_env",
+                            "location": "westeurope",
+                            "identity": {
+                                "type": "SystemAssigned"
+                            },
+                            "properties": {
+                                "scope": "[[concat(subscription().id, '/resourcegroups/', resourceGroup().name )]",
+                                "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/cd3aa116-8754-49c9-a813-ad46512ece54",
+                                "parameters": {
+                                    "tagName": {
+                                        "value": "env"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Authorization/policyAssignments",
+                            "apiVersion": "2019-09-01",
                             "name": "allowed_location_policy_assignement",
                             "properties": {
                                 "scope": "[[concat(subscription().id, '/resourcegroups/', resourceGroup().name )]",
@@ -139,7 +182,6 @@
                                 }
                             }
                         },
-
                         {
                             "type": "Microsoft.Consumption/budgets",
                             "apiVersion": "2019-10-01",
