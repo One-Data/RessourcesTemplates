@@ -139,11 +139,7 @@
                                 }
                             }
                         },
-                        
 
-			    
-		
-			
                         {
                             "type": "Microsoft.Consumption/budgets",
                             "apiVersion": "2019-10-01",
