@@ -6,8 +6,8 @@
             "type": "String"
         },
         "rgLocation": {
-            "type": "String",
-			"defaultValue": "westeurope"
+            "defaultValue": "westeurope",
+            "type": "String"
         },
         "budgetName": {
             "defaultValue": "MyBudget",
@@ -54,22 +54,22 @@
             "metadata": {
                 "description": "Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000."
             }
-        },        
-		"thirdThreshold": {
+        },
+        "thirdThreshold": {
             "defaultValue": "70",
             "type": "String",
             "metadata": {
                 "description": "Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000."
             }
-        },		
-		"fourthThreshold": {
+        },
+        "fourthThreshold": {
             "defaultValue": "90",
             "type": "String",
             "metadata": {
                 "description": "Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000."
             }
-        },		
-		"fifthThreshold": {
+        },
+        "fifthThreshold": {
             "defaultValue": "100",
             "type": "String",
             "metadata": {
@@ -88,7 +88,7 @@
             }
         },
         "contactEmails": {
-			    "defaultValue": [
+            "defaultValue": [
                 "antoine.hennuyer@devoteam.com",
                 "youcef.oussama.teraa@devoteam.com"
             ],
@@ -105,68 +105,6 @@
             "name": "[parameters('rgName')]",
             "location": "[parameters('rgLocation')]",
             "properties": {}
-        },
-        {
-            "type": "Microsoft.Consumption/budgets",
-            "apiVersion": "2019-10-01",
-            "name": "[parameters('budgetName')]",
-            "properties": {
-                "timePeriod": {
-                    "startDate": "[parameters('startDate')]"
-                },
-                "timeGrain": "[parameters('timeGrain')]",
-                "amount": "[parameters('amount')]",
-                "category": "Cost",
-                "notifications": {
-                    "NotificationForExceededBudget1": {
-                        "enabled": true,
-                        "operator": "GreaterThan",
-                        "threshold": "[parameters('firstThreshold')]",
-                        "contactEmails": "[parameters('contactEmails')]",
-                        "contactRoles": "[parameters('contactRoles')]"
-                    },
-                    "NotificationForExceededBudget2": {
-                        "enabled": true,
-                        "operator": "GreaterThan",
-                        "threshold": "[parameters('secondThreshold')]",
-                        "contactEmails": "[parameters('contactEmails')]",
-                        "contactRoles": "[parameters('contactRoles')]"
-                    },
-					"NotificationForExceededBudget3": {
-                        "enabled": true,
-                        "operator": "GreaterThan",
-                        "threshold": "[parameters('thirdThreshold')]",
-                        "contactEmails": "[parameters('contactEmails')]",
-                        "contactRoles": "[parameters('contactRoles')]"
-                    },					
-					"NotificationForExceededBudget4": {
-                        "enabled": true,
-                        "operator": "GreaterThan",
-                        "threshold": "[parameters('fourthThreshold')]",
-                        "contactEmails": "[parameters('contactEmails')]",
-                        "contactRoles": "[parameters('contactRoles')]"
-					},					
-					"NotificationForExceededBudget5": {
-                        "enabled": true,
-                        "operator": "GreaterThan",
-                        "threshold": "[parameters('fifthThreshold')]",
-                        "contactEmails": "[parameters('contactEmails')]",
-                        "contactRoles": "[parameters('contactRoles')]"
-					}
-                    
-                },
-                "filter": {
-                    "and": [
-                        {
-                            "dimensions": {
-                                "name": "ResourceGroupName",
-                                "operator": "In",
-                                "values": "[parameters('rgName')]"
-                            }
-                        }
-                    ]
-                }
-            }
         },
         {
             "type": "Microsoft.Resources/deployments",
@@ -198,6 +136,67 @@
                                             "europe"
                                         ]
                                     }
+                                }
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Consumption/budgets",
+                            "apiVersion": "2019-10-01",
+                            "name": "[parameters('budgetName')]",
+                            "properties": {
+                                "timePeriod": {
+                                    "startDate": "[parameters('startDate')]"
+                                },
+                                "timeGrain": "[parameters('timeGrain')]",
+                                "amount": "[parameters('amount')]",
+                                "category": "Cost",
+                                "notifications": {
+                                    "NotificationForExceededBudget1": {
+                                        "enabled": true,
+                                        "operator": "GreaterThan",
+                                        "threshold": "[parameters('firstThreshold')]",
+                                        "contactEmails": "[parameters('contactEmails')]",
+                                        "contactRoles": "[parameters('contactRoles')]"
+                                    },
+                                    "NotificationForExceededBudget2": {
+                                        "enabled": true,
+                                        "operator": "GreaterThan",
+                                        "threshold": "[parameters('secondThreshold')]",
+                                        "contactEmails": "[parameters('contactEmails')]",
+                                        "contactRoles": "[parameters('contactRoles')]"
+                                    },
+                                    "NotificationForExceededBudget3": {
+                                        "enabled": true,
+                                        "operator": "GreaterThan",
+                                        "threshold": "[parameters('thirdThreshold')]",
+                                        "contactEmails": "[parameters('contactEmails')]",
+                                        "contactRoles": "[parameters('contactRoles')]"
+                                    },
+                                    "NotificationForExceededBudget4": {
+                                        "enabled": true,
+                                        "operator": "GreaterThan",
+                                        "threshold": "[parameters('fourthThreshold')]",
+                                        "contactEmails": "[parameters('contactEmails')]",
+                                        "contactRoles": "[parameters('contactRoles')]"
+                                    },
+                                    "NotificationForExceededBudget5": {
+                                        "enabled": true,
+                                        "operator": "GreaterThan",
+                                        "threshold": "[parameters('fifthThreshold')]",
+                                        "contactEmails": "[parameters('contactEmails')]",
+                                        "contactRoles": "[parameters('contactRoles')]"
+                                    }
+                                },
+                                "filter": {
+                                    "and": [
+                                        {
+                                            "dimensions": {
+                                                "name": "ResourceGroupName",
+                                                "operator": "In",
+                                                "values": "[parameters('rgName')]"
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
