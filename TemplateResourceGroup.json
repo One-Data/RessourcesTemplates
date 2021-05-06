@@ -9,13 +9,6 @@
             "defaultValue": "westeurope",
             "type": "String"
         },
-        "budgetName": {
-            "defaultValue": "MyBudget",
-            "type": "String",
-            "metadata": {
-                "description": "Name of the Budget. It should be unique within a resource group."
-            }
-        },
         "amount": {
             "defaultValue": "100",
             "type": "String",
@@ -185,7 +178,7 @@
                         {
                             "type": "Microsoft.Consumption/budgets",
                             "apiVersion": "2019-10-01",
-                            "name": "[parameters('budgetName')]",
+                            "name": "[concat('budget_', parameters('rgName'))]",
                             "properties": {
                                 "timePeriod": {
                                     "startDate": "[parameters('startDate')]"
